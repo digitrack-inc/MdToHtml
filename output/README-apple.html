@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HDX AGV</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black: #000000;
+  --near-black: #1d1d1f;
+  --light-gray: #f5f5f7;
+  --apple-blue: #0071e3;
+  --link-blue: #0066cc;
+  --bright-blue: #2997ff;
+  --white: #ffffff;
+  --dark-surface: #272729;
+  --dark-surface-2: #1c1c1e;
+  --text-secondary: rgba(255,255,255,0.72);
+  --text-tertiary: rgba(255,255,255,0.48);
+  --card-shadow: rgba(0,0,0,0.22) 3px 5px 30px 0px;
+  --font: 'Inter', 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font);
+  background: var(--black);
+  color: var(--white);
+  font-size: 17px;
+  line-height: 1.47;
+  letter-spacing: -0.374px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* NAV */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(0,0,0,0.82);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+nav .nav-inner {
+  max-width: 980px;
+  width: 100%;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+nav .nav-badge {
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.7);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 20px;
+}
+
+nav .nav-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--white);
+  letter-spacing: -0.2px;
+}
+
+nav .nav-sep {
+  color: rgba(255,255,255,0.3);
+  font-size: 13px;
+  margin: 0 2px;
+}
+
+/* HERO */
+.hero {
+  background: var(--black);
+  padding: 96px 24px 80px;
+  text-align: center;
+}
+
+.hero-inner {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.hero-eyebrow {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--apple-blue);
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  font-size: clamp(48px, 8vw, 72px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -1px;
+  color: var(--white);
+  margin-bottom: 20px;
+}
+
+.hero-desc {
+  font-size: 19px;
+  line-height: 1.55;
+  color: rgba(255,255,255,0.72);
+  letter-spacing: -0.3px;
+  max-width: 580px;
+  margin: 0 auto 36px;
+}
+
+.hero-tags {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.75);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 20px;
+  letter-spacing: 0;
+}
+
+.tag-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--apple-blue);
+  flex-shrink: 0;
+}
+
+/* FEATURE CARDS ROW */
+.feature-row {
+  background: var(--light-gray);
+  padding: 72px 24px;
+}
+
+.feature-row-inner {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.4);
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.feature-card {
+  background: var(--white);
+  border-radius: 18px;
+  padding: 32px 28px;
+  box-shadow: var(--card-shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-2px);
+  box-shadow: rgba(0,0,0,0.28) 3px 10px 40px 0px;
+}
+
+.feature-icon {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  background: var(--near-black);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 18px;
+  font-size: 18px;
+}
+
+.feature-card h3 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--near-black);
+  margin-bottom: 8px;
+  letter-spacing: -0.2px;
+  line-height: 1.2;
+}
+
+.feature-card p {
+  font-size: 14px;
+  color: rgba(0,0,0,0.55);
+  line-height: 1.5;
+  letter-spacing: -0.1px;
+}
+
+/* CONTENT SECTIONS */
+.section-dark {
+  background: var(--black);
+  padding: 80px 24px;
+}
+
+.section-light {
+  background: var(--light-gray);
+  padding: 80px 24px;
+}
+
+.section-dark-alt {
+  background: var(--dark-surface-2);
+  padding: 80px 24px;
+}
+
+.content-inner {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.section-header {
+  margin-bottom: 44px;
+}
+
+.section-header h2 {
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+  margin-bottom: 10px;
+}
+
+.section-dark .section-header h2 { color: var(--white); }
+.section-light .section-header h2 { color: var(--near-black); }
+.section-dark-alt .section-header h2 { color: var(--white); }
+
+.section-header p {
+  font-size: 17px;
+  line-height: 1.5;
+  letter-spacing: -0.3px;
+}
+
+.section-dark .section-header p { color: rgba(255,255,255,0.6); }
+.section-light .section-header p { color: rgba(0,0,0,0.55); }
+
+/* STEP LIST */
+.step-list {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.step-item {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.step-num {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: rgba(0,113,227,0.15);
+  border: 1.5px solid rgba(0,113,227,0.4);
+  color: var(--apple-blue);
+  font-size: 15px;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.step-content h3 {
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 12px;
+  letter-spacing: -0.3px;
+}
+
+.section-light .step-content h3 { color: var(--near-black); }
+
+/* CODE BLOCKS */
+pre {
+  background: #0d0d0f;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 20px 24px;
+  overflow-x: auto;
+  margin: 16px 0;
+  font-size: 13.5px;
+  line-height: 1.65;
+  position: relative;
+}
+
+.section-light pre {
+  background: #1c1c1e;
+}
+
+pre code {
+  font-family: 'SF Mono', 'Fira Code', 'Fira Mono', 'Roboto Mono', Menlo, monospace;
+  color: #e5e5ea;
+  font-size: 13px;
+  background: none;
+  padding: 0;
+  border-radius: 0;
+}
+
+code {
+  font-family: 'SF Mono', 'Fira Code', 'Fira Mono', 'Roboto Mono', Menlo, monospace;
+  font-size: 13px;
+  background: rgba(255,255,255,0.1);
+  color: var(--bright-blue);
+  padding: 2px 7px;
+  border-radius: 5px;
+  letter-spacing: 0;
+}
+
+.section-light code {
+  background: rgba(0,0,0,0.07);
+  color: #005cc5;
+}
+
+/* code syntax colors */
+.kw { color: #ff7ab2; }
+.cm { color: rgba(255,255,255,0.38); font-style: italic; }
+.st { color: #fc6a5d; }
+.nb { color: #41a1c0; }
+
+/* TABLES */
+.table-wrap {
+  overflow-x: auto;
+  margin: 16px 0;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.section-light .table-wrap {
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14.5px;
+}
+
+thead tr {
+  background: rgba(255,255,255,0.05);
+}
+
+.section-light thead tr {
+  background: rgba(0,0,0,0.05);
+}
+
+th {
+  padding: 13px 18px;
+  text-align: left;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.section-light th {
+  color: rgba(0,0,0,0.45);
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+td {
+  padding: 13px 18px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.85);
+  line-height: 1.4;
+}
+
+.section-light td {
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  color: rgba(0,0,0,0.75);
+}
+
+tr:last-child td { border-bottom: none; }
+
+td a, th a {
+  color: var(--bright-blue);
+  text-decoration: none;
+}
+
+td a:hover { text-decoration: underline; }
+
+.section-light td a {
+  color: var(--link-blue);
+}
+
+td code {
+  font-size: 12.5px;
+}
+
+/* ARCH DIAGRAM */
+.arch-box {
+  background: #0d0d0f;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  padding: 28px 24px;
+  overflow-x: auto;
+  margin: 16px 0;
+}
+
+.arch-box pre {
+  background: none;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  font-size: 13px;
+  color: #e5e5ea;
+  white-space: pre;
+}
+
+/* PERFORMANCE METRICS */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 14px;
+  margin: 24px 0;
+}
+
+.metric-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px;
+  padding: 20px 18px;
+  text-align: center;
+}
+
+.metric-value {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: -0.5px;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.metric-value span {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--apple-blue);
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  letter-spacing: 0;
+}
+
+.metric-label {
+  font-size: 12px;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.3px;
+}
+
+/* TROUBLESHOOT CARDS */
+.trouble-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.trouble-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px;
+  padding: 22px 24px;
+}
+
+.trouble-card h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.trouble-badge {
+  font-size: 11px;
+  font-weight: 600;
+  background: rgba(255, 69, 58, 0.2);
+  color: #ff453a;
+  padding: 2px 8px;
+  border-radius: 5px;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.error-block {
+  background: rgba(255, 69, 58, 0.08);
+  border: 1px solid rgba(255, 69, 58, 0.2);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 10px;
+  font-family: 'SF Mono', 'Fira Code', Menlo, monospace;
+  font-size: 13px;
+  color: #ff453a;
+}
+
+.trouble-card p {
+  font-size: 14px;
+  color: rgba(255,255,255,0.6);
+  margin-top: 10px;
+  line-height: 1.5;
+}
+
+/* REPO CARDS */
+.repo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+}
+
+.repo-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px;
+  padding: 22px 22px;
+  transition: background 0.2s;
+  text-decoration: none;
+  display: block;
+}
+
+.repo-card:hover {
+  background: rgba(255,255,255,0.09);
+}
+
+.repo-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--bright-blue);
+  margin-bottom: 7px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.repo-desc {
+  font-size: 13.5px;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.45;
+}
+
+/* DOCS GRID */
+.docs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 12px;
+}
+
+.doc-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--white);
+  border-radius: 12px;
+  padding: 16px 18px;
+  text-decoration: none;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  transition: box-shadow 0.2s ease, transform 0.15s ease;
+}
+
+.doc-item:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.14);
+  transform: translateY(-1px);
+}
+
+.doc-icon {
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  background: rgba(0,113,227,0.1);
+  color: var(--link-blue);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.doc-info .doc-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--near-black);
+  margin-bottom: 2px;
+}
+
+.doc-info .doc-sub {
+  font-size: 12.5px;
+  color: rgba(0,0,0,0.45);
+}
+
+/* BUILD OPTIONS TABLE wrapper in light section */
+.section-light .table-wrap { border: 1px solid rgba(0,0,0,0.1); }
+
+/* INLINE LISTS */
+ul, ol {
+  padding-left: 22px;
+  margin: 10px 0;
+}
+
+li {
+  margin-bottom: 6px;
+  line-height: 1.55;
+  font-size: 15.5px;
+}
+
+.section-dark li { color: rgba(255,255,255,0.8); }
+.section-light li { color: rgba(0,0,0,0.72); }
+
+/* FOOTER */
+footer {
+  background: var(--dark-surface-2);
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding: 40px 24px;
+  text-align: center;
+}
+
+footer p {
+  font-size: 13px;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: -0.1px;
+}
+
+footer strong {
+  color: rgba(255,255,255,0.6);
+  font-weight: 600;
+}
+
+/* RESPONSIVE */
+@media (max-width: 680px) {
+  .hero { padding: 64px 20px 56px; }
+  .feature-grid { grid-template-columns: 1fr; }
+  .repo-grid { grid-template-columns: 1fr; }
+  .docs-grid { grid-template-columns: 1fr; }
+  .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+  .step-item { grid-template-columns: 32px 1fr; gap: 14px; }
+  .section-dark, .section-light, .section-dark-alt { padding: 56px 20px; }
+  pre { padding: 16px 16px; font-size: 12.5px; }
+}
+
+/* divider */
+.divider {
+  height: 1px;
+  background: rgba(255,255,255,0.07);
+  max-width: 980px;
+  margin: 0 auto;
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <span class="nav-badge">C++23</span>
+    <span class="nav-sep">/</span>
+    <span class="nav-title">HDX AGV</span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <p class="hero-eyebrow">Autonomous Forklift Control System</p>
+    <h1>HDX AGV</h1>
+    <p class="hero-desc">포크리프트 무인 운반 차량(AGV) C++ 제어 시스템. 실시간 30ms 제어 루프와 Zenoh 브로커리스 통신 기반의 산업용 자율 주행 소프트웨어.</p>
+    <div class="hero-tags">
+      <span class="tag"><span class="tag-dot"></span>30ms 실시간 루프</span>
+      <span class="tag"><span class="tag-dot"></span>Zenoh P2P 통신</span>
+      <span class="tag"><span class="tag-dot"></span>C++23</span>
+      <span class="tag"><span class="tag-dot"></span>Fail-Safe 설계</span>
+    </div>
+  </div>
+</section>
+
+<!-- KEY FEATURES -->
+<section class="feature-row">
+  <div class="feature-row-inner">
+    <p class="section-label">주요 기능</p>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>30ms 실시간 제어</h3>
+        <p>절대 시간 스케줄링으로 drift를 방지하는 독립 제어 루프. 제어 주기가 통신 지연의 영향을 받지 않습니다.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔗</div>
+        <h3>Zenoh 브로커리스 통신</h3>
+        <p>ROS2 스타일 Node/Publisher/Subscriber 구조. 브로커 없는 P2P Pub/Sub 통신으로 &lt;1ms 지연.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🛡</div>
+        <h3>Fail-Safe 설계</h3>
+        <p>장애 발생 시 즉시 제로 명령 출력. <code>std::expected</code> 기반 타입 안전 에러 처리.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌳</div>
+        <h3>BehaviorTree 임무 계획</h3>
+        <p>BehaviorTree.CPP 연동으로 복잡한 자율 주행 임무를 구조적으로 구성합니다. (선택적 빌드)</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>텔레메트리 녹화</h3>
+        <p>SQLite3 로컬 저장 및 InfluxDB 연동(선택)으로 운행 데이터를 실시간 기록합니다.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚙️</div>
+        <h3>계층형 아키텍처</h3>
+        <p>Service → Communication → Control → Hardware 4계층 구조로 각 레이어가 명확히 분리됩니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECH STACK -->
+<section class="section-dark">
+  <div class="content-inner">
+    <div class="section-header">
+      <h2>기술 스택</h2>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>구분</th><th>내용</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>언어</td><td><code>C++23</code></td></tr>
+          <tr><td>빌드</td><td><code>CMake 3.20+</code>, <code>Conan 2.0+</code></td></tr>
+          <tr><td>통신</td><td>Zenoh 1.7.2 (zenohcxx)</td></tr>
+          <tr><td>수치 연산</td><td>Eigen 3.4.0, OSQP 0.6.3</td></tr>
+          <tr><td>직렬화</td><td>nlohmann_json 3.12.0</td></tr>
+          <tr><td>로깅</td><td>spdlog 1.12.0</td></tr>
+          <tr><td>데이터베이스</td><td>SQLite3 3.44.2</td></tr>
+          <tr><td>테스트</td><td>GTest 1.14.0</td></tr>
+          <tr><td>BehaviorTree</td><td>BehaviorTree.CPP 4.7.2 (선택)</td></tr>
+          <tr><td>플랫폼</td><td>Windows (MSVC v143), Linux</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- RELATED REPOS -->
+<section class="section-dark-alt">
+  <div class="content-inner">
+    <div class="section-header">
+      <h2>관련 레포지토리</h2>
+    </div>
+    <div class="repo-grid">
+      <a href="https://github.com/digitrack-inc/hdx_core" class="repo-card">
+        <div class="repo-name">↗ hdx_core</div>
+        <p class="repo-desc">Python SDK — 메시지 정의, Node, Publisher/Subscriber</p>
+      </a>
+      <a href="https://github.com/digitrack-inc/hdx_tools" class="repo-card">
+        <div class="repo-name">↗ hdx_tools</div>
+        <p class="repo-desc">Python 도구 — 모니터링, 시각화, BT 유틸리티</p>
+      </a>
+      <a href="https://github.com/digitrack-inc/hdx_agv_launcher" class="repo-card">
+        <div class="repo-name">↗ hdx_agv_launcher</div>
+        <p class="repo-desc">개발/배포 환경 런처</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- PREREQUISITES -->
+<section class="section-light">
+  <div class="content-inner">
+    <div class="section-header">
+      <h2>사전 요구사항</h2>
+    </div>
+    <ul>
+      <li><strong>Visual Studio 2022</strong> — C++ 데스크톱 워크로드, MSVC v143 컴파일러</li>
+      <li><strong>CMake 3.20+</strong></li>
+      <li><strong>Conan 2.0+</strong> — <code>pip install conan</code></li>
+      <li><strong>Python 3.7+</strong> — Conan 의존성</li>
+    </ul>
+    <p style="margin-top:20px; font-size:14px; color:rgba(0,0,0,0.55);">버전 확인:</p>
+    <pre><code>conan --version   <span style="color:#6e7781"># 2.0 이상</span>
+cmake --version   <span style="color:#6e7781"># 3.20 이상</span></code></pre>
+  </div>
+</section>
+
+<!-- INSTALL & BUILD -->
+<section class="section-dark">
+  <div class="content-inner">
+    <div class="section-header">
+      <h2>설치 및 빌드</h2>
+    </div>
+    <div class="step-list">
+
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>저장소 클론</h3>
+          <pre><code>git clone &lt;repository-url&gt;
+cd hdx_agv</code></pre>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Conan 프로파일 설정</h3>
+          <p style="color:rgba(255,255,255,0.55); font-size:14.5px; margin-bottom:12px;">MSVC v143(Visual Studio 2022) 컴파일러를 사용하는 기본 프로파일을 생성합니다.</p>
+          <pre><code>$profileDir = Join-Path $HOME ".conan2/profiles"
+New-Item -ItemType Directory -Force -Path $profileDir | Out-Null
+
+@"
+[settings]
+compiler=msvc
+compiler.version=193
+compiler.update=8
+compiler.runtime=dynamic
+compiler.cppstd=23
+arch=x86_64
+build_type=Release
+os=Windows
+
+[conf]
+sqlite3/*:tools.build:cflags+=["/utf-8"]
+sqlite3/*:tools.build:cxxflags+=["/utf-8"]
+"@ | Set-Content (Join-Path $profileDir "default")</code></pre>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>의존성 설치 및 빌드</h3>
+          <pre><code><span style="color:rgba(255,255,255,0.38)"># Conan 의존성 설치 (첫 실행 시 2~3분 소요)</span>
+conan install . -of build --build=missing -s compiler.cppstd=23
+
+<span style="color:rgba(255,255,255,0.38)"># CMake 구성</span>
+cmake --preset conan-release
+
+<span style="color:rgba(255,255,255,0.38)"># 빌드 (1~2분 소요)</span>
+cmake --build build --config Release</code></pre>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="margin-top:48px;">
+      <h3 style="font-size:19px; font-weight:700; color:var(--white); margin-bottom:16px; letter-spacing:-0.3px;">빌드 옵션</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>옵션</th><th>기본값</th><th>설명</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>HDX_BUILD_TESTS</code></td><td>ON</td><td>GTest 단위 테스트 빌드</td></tr>
+            <tr><td><code>HDX_BUILD_EXAMPLES</code></td><td>ON</td><td>예제 바이너리 빌드</td></tr>
+            <tr><td><code>HDX_BUILD_SERVICES</code></td><td>ON</td><td>서비스 바이너리 빌드</td></tr>
+            <tr><td><code>HDX_WITH_BEHAVIOR_TREE</code></td><td>OFF</td><td>BehaviorTree.CPP 연동</td></tr>
+            <tr><td><code>HDX_WITH_TELEMETRY</code></td><td>ON</td><td>텔레메트리 및 녹화 기능</td></tr>
+            <tr><td><code>HDX_WITH_INFLUXDB</code></td><td>OFF</td><td>InfluxDB 메시지 저장</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <pre><code>cmake --preset conan-release -DHDX_WITH_BEHAVIOR_TREE=ON</code></pre>
+    </div>
+  </div>
+</section>
+
+<!-- RUN -->
+<section class="section-light">
+  <div class="content-inner">
+    <div class="section-header">
+      <h2>실행</h2>
+    </div>
+
+    <h3 style="font-size:19px; font-weight:700; color:var(--near-black); margin-bottom:12px; letter-spacing:-0.3px;">예제 — Publisher/Subscriber 동작 확인</h3>
+    <p style="font-size:14.5px; color:rgba(0,0,0,0.55); margin-bottom:12px;">터미널 두 개에서 각각 실행합니다.</p>
+    <pre><code><span style="color:rgba(255,255,255,0.4)"># 터미널 1: Publisher 실행</span>
+cd build/examples/Release
+./simple_publisher.exe
+
+<span style="color:rgba(255,255,255,0.4)"># 터미널 2: Subscriber 실행</span>
+cd build/examples/Release
+./simple_subscriber.exe</code></pre>
+
+    <h3 style="font-size:19px; font-weight:700; color:var(--near-black); margin: 32px 0 12px; letter-spacing:-0.3px;">서비스 실행</h3>
+    <pre><code><span style="color:rgba(255,255,255,0.4)"># EB Controller (엔코더 기반 포크리프트 제어)</span>
+cd build/services/hdx_eb_controller/Release
+./hdx_eb_controller.exe --config config/hdx_eb_controller.json
+
+<span style="color:rgba(255,255,255,0.4)"># ES Controller (엔코더-스피드 기반 제어)</span>
+cd build/services/hdx_es_controller/Release
+./hdx_es_controller.exe --config config/hdx_es_controller.json</code></pre>
+
+    <h3 style="font-size:19px; font-weight:700; color:var(--near-black); margin: 32px 0 12px; letter-spacing:-0.3px;">실시간 로그 확인</h3>
+    <pre><code><span style="color:rgba(255,255,255,0.4)"># Windows PowerShell</span>
+Get-Content logs\latest\*.log -Wait -Tail 50</code></pre>
+    <pre><code><span style="color:rgba(255,255,255,0.4)"># Git Bash / Linux</span>
+tail -f logs/latest/*.log</code></pre>
+  </div>
+</section>
+
+<!-- ARCHITECTURE -->
+<section class="section-dark">
+  <div class="content-inner">
+    <div class="section-header">
+      <h2>아키텍처</h2>
+      <p>시스템은 4개 계층으로 구성됩니다. 실시간 제어 루프와 Pub/Sub 모니터링 경로를 분리하여 제어 주기가 통신 지연의 영향을 받지 않습니다.</p>
+    </div>
+
+    <div class="arch-box">
+<pre>┌─────────────────────────────────────────────────┐
+│              Service Layer                      │
+│  BehaviorTree | Navigation | Planning           │
+├─────────────────────────────────────────────────┤
+│           Communication Layer                   │
+│      Zenoh P2P Transport (브로커리스)            │
+├─────────────────────────────────────────────────┤
+│              Control Layer                      │
+│  HdxForkliftControllerService (30ms 독립 스레드) │
+│  DriveController | ForkController               │
+├─────────────────────────────────────────────────┤
+│             Hardware Layer                      │
+│  ZapiClient(CAN) | WireClient(UDP) | DigitalIO  │
+└─────────────────────────────────────────────────┘</pre>
+    </div>
+
+    <h3 style="font-size:19px; font-weight:700; color:var(--white); margin: 44px 0 16px; letter-spacing:-0.3px;">주요 토픽</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>토픽</th><th>방향</th><th>주기</th><th>설명</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>forklift/snapshot</code></td><td>Pub</td><td>30ms</td><td>포크리프트 전체 상태 스냅샷</td></tr>
+          <tr><td><code>forklift/cmd_vel</code></td><td>Sub</td><td>이벤트</td><td>속도 제어 명령</td></tr>
+          <tr><td><code>forklift/cmd_fork</code></td><td>Sub</td><td>이벤트</td><td>포크 제어 명령</td></tr>
+          <tr><td><code>navigation/robot_pose</code></td><td>Pub</td><td>이벤트</td><td>NAV350 위치</td></tr>
+          <tr><td><code>navigation/trajectory</code></td><td>Pub/Sub</td><td>—</td><td>궤적 데이터</td></tr>
+          <tr><td><code>lidar/pcd/front</code></td><td>Pub</td><td>~15Hz</td><td>전방 포인트클라우드</td></tr>
+          <tr><td><code>lidar/pcd/rear</code></td><td>Pub</td><td>~15Hz</td><td>후방 포인트클라우드</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="font-size:19px; font-weight:700; color:var(--white); margin: 44px 0 16px; letter-spacing:-0.3px;">성능 특성</h3>
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-value">30<span>ms</span></div>
+        <div class="metric-label">제어 스레드 주기</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">&lt;10<span>ms</span></div>
+        <div class="metric-label">루프 내부 처리</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">&lt;5<span>ms</span></div>
+        <div class="metric-label">CAN 통신</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">&lt;2<span>ms</span></div>
+        <div class="metric-label">UDP 통신</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">&lt;1<span>ms</span></div>
+        <div class="metric-label">Zenoh Pub/Sub</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECT STRUCTURE -->
+<section class="section-dark-alt">
+  <div class="content-inner">
+    <div class="section-header">
+      <h2>프로젝트 구조</h2>
+    </div>
+    <pre><code>hdx_agv/
+├── src/                        <span style="color:rgba(255,255,255,0.35)"># 핵심 라이브러리 소스</span>
+│   ├── communication/          <span style="color:rgba(255,255,255,0.35)"># Zenoh 전송 계층, HdxNode, 실행기</span>
+│   ├── control/                <span style="color:rgba(255,255,255,0.35)"># DriveController, ForkController</span>
+│   ├── hardware/               <span style="color:rgba(255,255,255,0.35)"># 하드웨어 추상화 (CAN, UDP, DIO)</span>
+│   ├── action/                 <span style="color:rgba(255,255,255,0.35)"># 액션 서버/클라이언트</span>
+│   ├── behavior_tree/          <span style="color:rgba(255,255,255,0.35)"># BehaviorTree 노드</span>
+│   ├── telemetry/              <span style="color:rgba(255,255,255,0.35)"># 텔레메트리 녹화</span>
+│   └── main.cpp
+├── include/                    <span style="color:rgba(255,255,255,0.35)"># 공개 헤더</span>
+│   ├── common/models/          <span style="color:rgba(255,255,255,0.35)"># 메시지 타입 정의 (JSON 직렬화 포함)</span>
+│   ├── communication/          <span style="color:rgba(255,255,255,0.35)"># HdxNode, NodeBuilder, Publisher/Subscriber</span>
+│   ├── control/                <span style="color:rgba(255,255,255,0.35)"># 제어 인터페이스</span>
+│   └── hardware/               <span style="color:rgba(255,255,255,0.35)"># 하드웨어 인터페이스</span>
+├── services/                   <span style="color:rgba(255,255,255,0.35)"># 독립 실행 서비스</span>
+│   ├── hdx_eb_controller/      <span style="color:rgba(255,255,255,0.35)"># EB 포크리프트 컨트롤러 서비스</span>
+│   ├── hdx_es_controller/      <span style="color:rgba(255,255,255,0.35)"># ES 포크리프트 컨트롤러 서비스</span>
+│   ├── hdx_behavior_tree/      <span style="color:rgba(255,255,255,0.35)"># BT 실행 서비스</span>
+│   ├── hdx_trajectory_follower/<span style="color:rgba(255,255,255,0.35)"># 궤적 추종 서비스</span>
+│   ├── hdx_trajectory_generator/<span style="color:rgba(255,255,255,0.35)"># 궤적 생성 서비스</span>
+│   ├── hdx_pose_publisher/     <span style="color:rgba(255,255,255,0.35)"># 위치 발행 서비스</span>
+│   ├── hdx_pcd_publisher/      <span style="color:rgba(255,255,255,0.35)"># 포인트클라우드 발행 서비스</span>
+│   └── topic_recorder/         <span style="color:rgba(255,255,255,0.35)"># 토픽 녹화 서비스</span>
+├── examples/                   <span style="color:rgba(255,255,255,0.35)"># 예제 코드</span>
+├── tests/                      <span style="color:rgba(255,255,255,0.35)"># 단위 테스트</span>
+├── config/                     <span style="color:rgba(255,255,255,0.35)"># 서비스 설정 파일 (JSON)</span>
+├── docs/                       <span style="color:rgba(255,255,255,0.35)"># 상세 문서</span>
+├── cmake/                      <span style="color:rgba(255,255,255,0.35)"># CMake 유틸리티</span>
+├── conan_recipes/              <span style="color:rgba(255,255,255,0.35)"># 커스텀 Conan 레시피</span>
+├── CMakeLists.txt
+└── conanfile.txt</code></pre>
+  </div>
+</section>
+
+<!-- TEST -->
+<section class="section-dark">
+  <div class="content-inner">
+    <div class="section-header">
+      <h2>테스트</h2>
+    </div>
+    <pre><code><span style="color:rgba(255,255,255,0.38)"># 전체 테스트 실행</span>
+cmake --build build --config Release --target all
+cd build
+ctest -C Release --output-on-failure
+
+<span style="color:rgba(255,255,255,0.38)"># 특정 타깃만 빌드</span>
+cmake --build build --config Release --target hdx_eb_controller</code></pre>
+  </div>
+</section>
+
+<!-- TROUBLESHOOT -->
+<section class="section-dark-alt">
+  <div class="content-inner">
+    <div class="section-header">
+      <h2>문제 해결</h2>
+    </div>
+    <div class="trouble-list">
+
+      <div class="trouble-card">
+        <h3><span class="trouble-badge">Error</span>Conan 의존성 누락 오류</h3>
+        <div class="error-block">ERROR: Missing prebuilt package</div>
+        <pre><code>conan install . -of build --build=missing -s compiler.cppstd=23</code></pre>
+      </div>
+
+      <div class="trouble-card">
+        <h3><span class="trouble-badge">Error</span>CMake 컴파일러 미발견 오류</h3>
+        <div class="error-block">CMake Error: Could not find CMAKE_C_COMPILER</div>
+        <p>Visual Studio 2022 C++ 데스크톱 워크로드 및 MSVC v143 컴파일러가 설치되어 있는지 확인합니다.</p>
+      </div>
+
+      <div class="trouble-card">
+        <h3><span class="trouble-badge">Error</span>DLL 미발견 런타임 오류</h3>
+        <div class="error-block">The code execution cannot proceed because *.dll was not found</div>
+        <p>실행 파일과 동일한 디렉토리(<code>build/services/*/Release/</code>)에서 실행합니다. zenohc.dll은 빌드 시 자동으로 복사됩니다.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- DOCS -->
+<section class="section-light">
+  <div class="content-inner">
+    <div class="section-header">
+      <h2>상세 문서</h2>
+    </div>
+    <div class="docs-grid">
+      <a href="docs/ARCHITECTURE.md" class="doc-item">
+        <div class="doc-icon">🏗</div>
+        <div class="doc-info">
+          <div class="doc-title">ARCHITECTURE.md</div>
+          <div class="doc-sub">전체 시스템 아키텍처</div>
+        </div>
+      </a>
+      <a href="docs/QUICK_START.md" class="doc-item">
+        <div class="doc-icon">🚀</div>
+        <div class="doc-info">
+          <div class="doc-title">QUICK_START.md</div>
+          <div class="doc-sub">빠른 시작 가이드</div>
+        </div>
+      </a>
+      <a href="docs/developer_guide.md" class="doc-item">
+        <div class="doc-icon">👨‍💻</div>
+        <div class="doc-info">
+          <div class="doc-title">developer_guide.md</div>
+          <div class="doc-sub">패턴, 에러 처리, 로깅</div>
+        </div>
+      </a>
+      <a href="docs/development/coding_standards.md" class="doc-item">
+        <div class="doc-icon">📐</div>
+        <div class="doc-info">
+          <div class="doc-title">coding_standards.md</div>
+          <div class="doc-sub">코딩 표준</div>
+        </div>
+      </a>
+      <a href="docs/communication/node_builder.md" class="doc-item">
+        <div class="doc-icon">🔧</div>
+        <div class="doc-info">
+          <div class="doc-title">node_builder.md</div>
+          <div class="doc-sub">NodeBuilder 사용법</div>
+        </div>
+      </a>
+      <a href="docs/communication/topics.md" class="doc-item">
+        <div class="doc-icon">📡</div>
+        <div class="doc-info">
+          <div class="doc-title">topics.md</div>
+          <div class="doc-sub">토픽 네이밍 규칙</div>
+        </div>
+      </a>
+      <a href="docs/communication/zenoh_transport.md" class="doc-item">
+        <div class="doc-icon">⚡</div>
+        <div class="doc-info">
+          <div class="doc-title">zenoh_transport.md</div>
+          <div class="doc-sub">Zenoh 전송 계층 설정</div>
+        </div>
+      </a>
+      <a href="docs/services/service_architecture_guide.md" class="doc-item">
+        <div class="doc-icon">🧩</div>
+        <div class="doc-info">
+          <div class="doc-title">service_architecture_guide.md</div>
+          <div class="doc-sub">서비스 DI 패턴</div>
+        </div>
+      </a>
+      <a href="docs/hardware/" class="doc-item">
+        <div class="doc-icon">🔌</div>
+        <div class="doc-info">
+          <div class="doc-title">hardware/</div>
+          <div class="doc-sub">하드웨어 프로토콜 (CAN, UDP, Wire, ZAPI)</div>
+        </div>
+      </a>
+      <a href="docs/SAFETY_ARCHITECTURE.md" class="doc-item">
+        <div class="doc-icon">🛡</div>
+        <div class="doc-info">
+          <div class="doc-title">SAFETY_ARCHITECTURE.md</div>
+          <div class="doc-sub">안전 아키텍처</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>HDX AGV</strong> &nbsp;|&nbsp; Digitrack Inc. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

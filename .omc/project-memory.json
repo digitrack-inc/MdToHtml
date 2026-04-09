@@ -1,0 +1,72 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1775705329137,
+  "projectRoot": "D:\\Project\\MdToHtml",
+  "techStack": {
+    "languages": [],
+    "frameworks": [],
+    "packageManager": null,
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": null,
+    "lintCommand": null,
+    "devCommand": null,
+    "scripts": {}
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "public"
+    ],
+    "gitBranches": {
+      "defaultBranch": "main",
+      "branchingStrategy": null
+    }
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "design-md": {
+      "path": "design-md",
+      "purpose": null,
+      "fileCount": 0,
+      "lastAccessed": 1775705329113,
+      "keyFiles": []
+    },
+    "gui": {
+      "path": "gui",
+      "purpose": null,
+      "fileCount": 3,
+      "lastAccessed": 1775705329114,
+      "keyFiles": [
+        "app.py",
+        "converter.py",
+        "theme_loader.py"
+      ]
+    },
+    "output": {
+      "path": "output",
+      "purpose": null,
+      "fileCount": 0,
+      "lastAccessed": 1775705329114,
+      "keyFiles": []
+    },
+    "public": {
+      "path": "public",
+      "purpose": "Public files",
+      "fileCount": 0,
+      "lastAccessed": 1775705329115,
+      "keyFiles": []
+    }
+  },
+  "hotPaths": [],
+  "userDirectives": []
+}
